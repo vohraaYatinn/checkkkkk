@@ -22,25 +22,56 @@ import Slider from "react-slick";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { usePathname, useSearchParams } from 'next/navigation';
-
+import useAxios from "@/network/useAxios";
+import { getSingleActivityById } from "@/urls/urls";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Page = () => {
   const [isOpenModalVideo, setOpenModalVideo] = useState(false);
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState("AE");
-  const pathname = usePathname();
 
 // localhost:3000/package-detail/10?category=electronics&price=1000
   // const searchParams = useSearchParams();
   // const category = searchParams.get('category');
   // const price = searchParams.get('price');
-
+  const showToasts = () => {
+    toast.info('Info: Lorem ipsum dolor', {
+      className: 'toast-info',
+    });
+    toast.error('Error: Lorem ipsum dolor', {
+      className: 'toast-error',
+    });
+    toast.warning('Warning: Lorem ipsum dolor', {
+      className: 'toast-warning',
+    });
+    toast.success('Success: Lorem ipsum dolor', {
+      className: 'toast-success',
+    });
+  };
+  const [
+    appointmentsCancelResponse,
+    appointmentsCancelError,
+    appointmentsCancelLoading,
+    appointmentsCancelFetch,
+  ] = useAxios();
+  const pathname = usePathname();
 
   const id = pathname.split('/').pop(); // Assuming `/package-detail/[id]`
-  console.log(id)
 
+  const [data, setData] = useState()
+  const fetchActivityByIdfunction = () => {
+    appointmentsCancelFetch(getSingleActivityById({},id ));
+  };
   useEffect(()=>{
-    
+    fetchActivityByIdfunction()
   },[id])
+  useEffect(()=>{
+    setData(appointmentsCancelResponse?.data)
+    console.log(appointmentsCancelResponse?.data)
+  },[appointmentsCancelResponse])
+
+
   const sliderSettings = {
     infinite: true,
     speed: 500,
@@ -170,7 +201,7 @@ const Page = () => {
     const newErrors = validate();
     if (Object.keys(newErrors).length === 0) {
       console.log(selected)
-      sendEmail(formData?.fullName, formData?.email, formData?.countryCode + formData?.phone, "Sunset Dubai Desert Safari with BBQ & Entertainment", formData?.message)
+      sendEmail(formData?.fullName, formData?.email, formData?.countryCode + formData?.phone, data?.name, formData?.message)
       console.log("Form submitted successfully:", formData);
       setShowModal(true)
 
@@ -259,7 +290,7 @@ const Page = () => {
           <div className="row g-xl-4 gy-5 main-package-details-div">
             <div className="col-xl-8">
 
-              <h2>Sunset Dubai Desert Safari with BBQ & Entertainment
+              <h2>{data?.name}
 
 
               </h2>
@@ -270,11 +301,11 @@ const Page = () => {
                     <path d="M14 7C14 8.85652 13.2625 10.637 11.9497 11.9497C10.637 13.2625 8.85652 14 7 14C5.14348 14 3.36301 13.2625 2.05025 11.9497C0.737498 10.637 0 8.85652 0 7C0 5.14348 0.737498 3.36301 2.05025 2.05025C3.36301 0.737498 5.14348 0 7 0C8.85652 0 10.637 0.737498 11.9497 2.05025C13.2625 3.36301 14 5.14348 14 7ZM7 3.0625C7 2.94647 6.95391 2.83519 6.87186 2.75314C6.78981 2.67109 6.67853 2.625 6.5625 2.625C6.44647 2.625 6.33519 2.67109 6.25314 2.75314C6.17109 2.83519 6.125 2.94647 6.125 3.0625V7.875C6.12502 7.95212 6.14543 8.02785 6.18415 8.09454C6.22288 8.16123 6.27854 8.2165 6.3455 8.25475L9.408 10.0048C9.5085 10.0591 9.62626 10.0719 9.73611 10.0406C9.84596 10.0092 9.93919 9.93611 9.99587 9.83692C10.0525 9.73774 10.0682 9.62031 10.0394 9.50975C10.0107 9.39919 9.93982 9.30426 9.842 9.24525L7 7.62125V3.0625Z">
                     </path>
                   </svg>
-                  7 Hours
+                  {data?.duration}{" "}{data?.durationType}
                 </li>
 
               </ul>
-              <p className="para-activity">Experience the magic of the Dubai desert at sunset with a thrilling safari adventure. This 7-hour tour offers a perfect blend of excitement and relaxation, featuring dune bashing, sandboarding, and a variety of traditional Bedouin-style camp activities. Enjoy a sumptuous barbecue dinner under the stars, accompanied by live entertainment including belly dancing and a fire show. This tour is designed to provide a memorable and immersive desert experience for all participants.
+              <p className="para-activity">{data?.description}
 
 
 
@@ -285,86 +316,19 @@ const Page = () => {
               <div className="highlight-tour mb-20">
                 <h4>Highlights of the Tour</h4>
                 <ul>
-                  <li><span className="activity-back-icon"><i className="bi bi-check" /></span>Dune bashing in the Dubai desert
+                {data?.Highlights.map((item, index) => {
+  return (
+    <li key={index}>
+      <span className="activity-back-icon">
+        <i className="bi bi-check" />
+      </span>
+      {item}
+    </li>
+  );
+})}
 
 
-
-
-                  </li>
-                  <li><span className="activity-back-icon"><i className="bi bi-check" /></span> Sandboarding on the golden dunes
-
-
-
-
-
-
-                  </li>
-                  <li><span className="activity-back-icon"><i className="bi bi-check" /></span> Camel riding at a traditional Bedouin camp
-
-
-
-
-                  </li>
-                  <li><span className="activity-back-icon"><i className="bi bi-check" /></span> Axe Throwing
-
-
-
-
-
-                  </li>
-                  <li><span className="activity-back-icon"><i className="bi bi-check" /></span>Henna painting and shisha smoking
-
-
-
-
-
-                  </li>
-                  <li><span className="activity-back-icon"><i className="bi bi-check" /></span>Wall Climbing
-
-
-
-
-
-                  </li>
-                  <li><span className="activity-back-icon"><i className="bi bi-check" /></span> Live entertainment: belly dancing, tenoura, and fire show
-
-
-
-
-
-
-
-                  </li>
-                  <li><span className="activity-back-icon"><i className="bi bi-check" /></span> Barbecue dinner with a variety of dishes
-
-
-
-
-
-
-
-                  </li>
-                  <li><span className="activity-back-icon"><i className="bi bi-check" /></span>Tea, coffee, water, and soft drinks included
-
-
-
-
-
-
-
-
-                  </li>
-                  <li><span className="activity-back-icon"><i className="bi bi-check" /></span>Scenic photo stops at sunset and during stargazing
-
-
-
-
-
-
-
-
-
-                  </li>
+                
                 </ul>
               </div>
               <h4 className="para-highlight">Good To Know </h4>
@@ -410,33 +374,20 @@ const Page = () => {
               <h4 className="para-highlight">Included and Excluded </h4>
               <div className="includ-and-exclud-area mb-20">
                 <ul>
-                  <li><i className="bi bi-check-lg" /> Pick-Up And Drop-Off From Your Accommodation
+                {data?.included.map((item, index) => {
+  return (
+    <li key={index+100}><i className="bi bi-check-lg" />{item}
                   </li>
-                  <li><i className="bi bi-check-lg" /> Clean And Air-Cooled Vehicle</li>
-                  <li><i className="bi bi-check-lg" /> Fresh Mineral Water For All Participants</li>
-                  <li><i className="bi bi-check-lg" /> Stop For Photos At Scenic Spots Throughout The Tour</li>
-                  <li><i className="bi bi-check-lg" /> A Professional And Licensed Tour Guide Throughout The Tour</li>
-                  <li><i className="bi bi-check-lg" /> Dune Bashing For All Participants
+  );
+})}
+                {data?.excluded.map((item, index) => {
+  return (
+    <li key={index+100}><i className="bi bi-x-lg" /> {item}
                   </li>
-                  <li><i className="bi bi-check-lg" />Sandboarding For All Participants
+  );
+})}
 
-                  </li>
-                  <li><i className="bi bi-check-lg" /> Dune Bashing For All Participants
-                  </li>
-                  <li><i className="bi bi-check-lg" /> Camp Activities (Camel Riding, Henna Painting, Belly Dancing, Tenoura/Fire Show, Shisha Smoking) For All Participants
-
-                  </li>
-                  <li><i className="bi bi-check-lg" /> Barbecue Dinner For All Participants
-                  </li>
-                  <li><i className="bi bi-check-lg" /> Tea, Coffee, Water & Soft Drinks For All Participants
-
-                  </li>
-
-                  <li><i className="bi bi-x-lg" /> Quad Biking (Extra Cost Discussed On Enquiry)
-
-                  </li>
-                  <li><i className="bi bi-x-lg" /> Any Extra Expenses Or Services Not Mentioned (E.g Food, Beverages)
-                  </li>
+        
                 </ul>
 
               </div>
@@ -640,40 +591,40 @@ const Page = () => {
                 </div>
                 <div className="faq-content">
                   <div className="accordion" id="accordionTravel">
-                    <div className="accordion-item">
-                      <h2 className="accordion-header" id="travelheadingOne">
-                        <button className="accordion-button btn-col-pop" type="button" data-bs-toggle="collapse" data-bs-target="#travelcollapseOne" aria-expanded="true" aria-controls="travelcollapseOne" style={{
-
-                        }}>
-                          01. What services does your travel website offer?
-                        </button>
-                      </h2>
-                      <div id="travelcollapseOne" className="accordion-collapse collapse show" aria-labelledby="travelheadingOne" data-bs-parent="#accordionTravel">
-                        <div className="accordion-body">
-                          Our website offers a wide range of travel services to ensure a seamless experience for our customers. These include customized tour packages tailored to individuals, families, and groups, along with hotel bookings and flight reservations. We also provide travel insurance assistance, guided tours, local sightseeing arrangements, and visa assistance for international travel. To make your journey stress-free, we offer 24/7 customer support throughout your trip.
-
-                        </div>
-                      </div>
-                    </div>
-                    <div className="accordion-item">
-                      <h2 className="accordion-header" id="travelheadingTwo">
-                        <button className="accordion-button btn-col-pop collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#travelcollapseTwo" aria-expanded="false" aria-controls="travelcollapseTwo">
-                          02. Can I modify or cancel my booking after confirmation?
-                        </button>
-                      </h2>
-                      <div id="travelcollapseTwo" className="accordion-collapse collapse" aria-labelledby="travelheadingTwo" data-bs-parent="#accordionTravel">
-                        <div className="accordion-body">
-                          Yes, you can modify or cancel your booking even after confirmation. However, it is important to note that changes or cancellations are subject to the terms and conditions set by the respective service providers, such as airlines and hotels. We recommend reviewing our detailed cancellation policy
-                        </div>
-                      </div>
-                    </div>
+  
+                  {data?.faqs.map((faq, index) => (
+  <div className="accordion-item" key={faq._id}>
+    <h2 className="accordion-header" id={`heading${index}`}>
+      <button
+        className="accordion-button btn-col-pop"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target={`#collapse${index}`}
+        aria-expanded={index === 0 ? "true" : "false"}
+        aria-controls={`collapse${index}`}
+      >
+        {`${index + 1}. ${faq.question}`}
+      </button>
+    </h2>
+    <div
+      id={`collapse${index}`}
+      className={`accordion-collapse collapse ${index === 0 ? "show" : ""}`}
+      aria-labelledby={`heading${index}`}
+      data-bs-parent="#accordionExample"
+    >
+      <div className="accordion-body">
+        {faq.answer}
+      </div>
+    </div>
+  </div>
+))}
 
                   </div>
                 </div>
               </div>
               <div className="review-section">
                 <p className="first-ppreview">There are no reviews yet.</p>
-                <h3>Be the first to review “Sunset Dubai Desert Safari with BBQ & Entertainment
+                <h3>Be the first to review “{data?.name}
 
                   ”</h3>
                 <p>Your email address will not be published.</p>
@@ -931,8 +882,9 @@ const Page = () => {
       /> */}
       </div>
       <hr />
+      <button onClick={showToasts}>Show Toasts</button>
 
-
+      <ToastContainer />
       <Footer />
     </>
   )
