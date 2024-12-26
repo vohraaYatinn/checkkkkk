@@ -1326,6 +1326,7 @@ ul {
   color: var(--title-color);
   background-color: var(--primary-color1);
   font-weight: 500;
+  color: white;
 }
 .nice-select .list .option.selected {
   background-color: var(--primary-color1);

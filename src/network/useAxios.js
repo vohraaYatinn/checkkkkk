@@ -1,12 +1,16 @@
-/* eslint-disable */
+"use client";
+
 import { useState, useEffect } from "react";
+
 // import { useDispatch, useSelector } from "react-redux";
 // import { tokenJson } from "../redux/reducers/functionalities.reducer";
 // import { updateToken } from '../redux/reducers/functionalities.reducer';
 
+import { useRouter } from 'next/navigation';
 
 const useAxios = () => {
     // const dispatch = useDispatch();
+    const router = useRouter();
 
     const [response, setResponse] = useState([]);
     const [error, setError] = useState('');
@@ -43,6 +47,7 @@ const useAxios = () => {
         } catch (err) {
             setError(err);
             if (err?.response?.status === 404) {
+                router.push('/not-found'); 
                 setError(err);
             }
             if (err?.response?.status === 403) {

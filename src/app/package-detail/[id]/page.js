@@ -23,7 +23,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { usePathname, useSearchParams } from 'next/navigation';
 import useAxios from "@/network/useAxios";
-import { getSingleActivityById } from "@/urls/urls";
+import { getSinglePackageById } from "@/urls/urls";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Page = () => {
@@ -35,20 +35,18 @@ const Page = () => {
   // const searchParams = useSearchParams();
   // const category = searchParams.get('category');
   // const price = searchParams.get('price');
-  const showToasts = () => {
-    toast.info('Info: Lorem ipsum dolor', {
-      className: 'toast-info',
-    });
-    toast.error('Error: Lorem ipsum dolor', {
-      className: 'toast-error',
-    });
-    toast.warning('Warning: Lorem ipsum dolor', {
-      className: 'toast-warning',
-    });
-    toast.success('Success: Lorem ipsum dolor', {
-      className: 'toast-success',
-    });
-  };
+  // const showToasts = () => {
+  //   toast.info('Info: Lorem ipsum dolor', {
+  //     className: 'toast-info',
+  //   });
+
+  //   toast.warning('Warning: Lorem ipsum dolor', {
+  //     className: 'toast-warning',
+  //   });
+  //   toast.success('Success: Lorem ipsum dolor', {
+  //     className: 'toast-success',
+  //   });
+  // };
   const [
     appointmentsCancelResponse,
     appointmentsCancelError,
@@ -61,7 +59,7 @@ const Page = () => {
 
   const [data, setData] = useState()
   const fetchActivityByIdfunction = () => {
-    appointmentsCancelFetch(getSingleActivityById({},id ));
+    appointmentsCancelFetch(getSinglePackageById({},id ));
   };
   useEffect(()=>{
     fetchActivityByIdfunction()
@@ -70,6 +68,11 @@ const Page = () => {
     setData(appointmentsCancelResponse?.data)
     console.log(appointmentsCancelResponse?.data)
   },[appointmentsCancelResponse])
+  useEffect(()=>{
+    if(appointmentsCancelError){
+
+    }
+  },[appointmentsCancelError])
 
 
   const sliderSettings = {
@@ -334,40 +337,19 @@ const Page = () => {
               <h4 className="para-highlight">Good To Know </h4>
               <div className="includ-and-exclud-area mb-20 good-to-know">
                 <ul>
-                  <li><b className="bold-activity">Booking Confirmation:</b> We will reconfirm the pick-up time a few hours before the tour starts to ensure punctuality and convenience.
-                  </li><br />
-                  <li><b className="bold-activity">Pet Policy:</b> Please note that pets are not allowed on this tour.
-                  </li><br />
-                  <li><b className="bold-activity">Children Policy:</b> Children below 12 years are considered children. They are under adult responsibility during the tour. A child seat is not provided.
-                  </li><br />
-                  <li><b className="bold-activity">Luggage Policy:</b> Due to space constraints in the vehicle, large luggage cannot be accommodated. We recommend bringing only small bags or backpacks to ensure your comfort and convenience throughout the tour.
-                  </li><br />
-                  <li><b className="bold-activity">Personal Belongings:</b> Avoid carrying expensive items. Your belongings are your responsibility. ATS is not liable for any lost items, but we will assist in locating them if lost.
-                  </li><br />
-                  <li><b className="bold-activity">Health Considerations:</b> Pregnant women and individuals with back or neck problems should evaluate their condition before participating in this tour.
-                  </li><br />
-                  <li><b className="bold-activity">Liability And Insurance:</b>  ATS is not responsible for any damage, loss, accidents, sickness, injury, or death that may occur during the tour. Comprehensive travel and health insurance are advised. All personal effects are solely your responsibility during the activity.
+                {data?.goodToKnow.map((item, index) => {
+  return (
+    <>
+    <li><b className="bold-activity">{item?.label}:</b> {item?.answer}
+                  </li>
+                 {index != (data?.goodToKnow?.length -1) && 
+                  <br />
+                }
+                  </>
+  );
+})}
 
-
-
-
-                  </li><br />
-                  <li><b className="bold-activity">Participation Responsibility:</b>  Ensure you are mentally and physically prepared for the activities of the tour. You are responsible for assessing your capability to participate in these activities.
-
-
-
-
-
-                  </li><br />
-
-                  <li><b className="bold-activity">Wheelchair Accessibility:</b> This tour is partially wheelchair accessible. The transportation provided and some of the tour locations may not be equipped to accommodate wheelchair users comfortably. We apologize for any inconvenience this may cause and are available to discuss alternative arrangements or provide recommendations for more accessible tours in the UAE.
-
-
-
-
-
-
-                  </li><br />
+              
                 </ul>
 
               </div>
@@ -399,188 +381,35 @@ const Page = () => {
 
                 <div className="accordion" id="tourPlan">
                   {/* 1st Activity */}
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingOne">
-                      <button
-                        className="accordion-button"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne"
-                        aria-expanded="true"
-                        aria-controls="collapseOne"
-                      >
-                        <span style={{ minWidth: "180px" }}>1st Activity</span> Quad Biking (Extra Cost On Arrival):
-                      </button>
-                    </h2>
-                    <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#tourPlan">
-                      <div className="accordion-body">
-                        <ul>
-                          <li>Experience the thrill of quad-biking on the desert dunes.</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+                  {data?.Itinerary?.map((item, index) => (
+  <div className="accordion-item" key={index}>
+    <h2 className="accordion-header" id={`heading${index}`}>
+      <button
+        className="accordion-button"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target={`#collapse${index}`}
+        aria-expanded={index === 0} // Open the first item by default
+        aria-controls={`collapse${index}`}
+      >
+        <span style={{ minWidth: "180px" }}>{item.label}</span> {item.heading}:
+      </button>
+    </h2>
+    <div
+      id={`collapse${index}`}
+      className={`accordion-collapse collapse ${index === 0 ? "show" : ""}`}
+      aria-labelledby={`heading${index}`}
+      data-bs-parent="#tourPlan"
+    >
+      <div className="accordion-body">
+        <ul>
+          <li>{item.answer}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+))}
 
-                  {/* 2nd Activity */}
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingTwo">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo"
-                        aria-expanded="false"
-                        aria-controls="collapseTwo"
-                      >
-                        <span style={{ minWidth: "180px" }}>2nd Activity</span> Dune Bashing:
-                      </button>
-                    </h2>
-                    <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#tourPlan">
-                      <div className="accordion-body">
-                        <ul>
-                          <li>Enjoy an adrenaline-pumping ride across the desert dunes in a 4x4 vehicle.</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 3rd Activity */}
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingThree">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree"
-                        aria-expanded="false"
-                        aria-controls="collapseThree"
-                      >
-                        <span style={{ minWidth: "180px" }}>3rd Activity</span> Sandboarding:
-                      </button>
-                    </h2>
-                    <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#tourPlan">
-                      <div className="accordion-body">
-                        <ul>
-                          <li>Glide down the sandy slopes on a sandboard, a fun activity for all ages.</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 4th Activity */}
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingFour">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseFour"
-                        aria-expanded="false"
-                        aria-controls="collapseFour"
-                      >
-                        <span style={{ minWidth: "180px" }}>4th Activity</span> Sunset (Photo Activity):
-                      </button>
-                    </h2>
-                    <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#tourPlan">
-                      <div className="accordion-body">
-                        <ul>
-                          <li>Capture stunning photos of the desert landscape as the sun sets, painting the sky in vibrant hues.</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 5th Activity */}
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingFive">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseFive"
-                        aria-expanded="false"
-                        aria-controls="collapseFive"
-                      >
-                        <span style={{ minWidth: "180px" }}>5th Activity</span> Bedouin-Style Camp Activities:
-                      </button>
-                    </h2>
-                    <div id="collapseFive" className="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#tourPlan">
-                      <div className="accordion-body">
-                        <ul>
-                          <li>Engage in traditional activities such as camel riding, henna painting, and shisha smoking.</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 6th Activity */}
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingSix">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseSix"
-                        aria-expanded="false"
-                        aria-controls="collapseSix"
-                      >
-                        <span style={{ minWidth: "180px" }}>6th Activity</span> Barbecue Dinner:
-                      </button>
-                    </h2>
-                    <div id="collapseSix" className="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#tourPlan">
-                      <div className="accordion-body">
-                        <ul>
-                          <li>Savor a delicious barbecue dinner with a variety of dishes, accompanied by tea, coffee, water, and soft drinks.</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 7th Activity */}
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingSeven">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseSeven"
-                        aria-expanded="false"
-                        aria-controls="collapseSeven"
-                      >
-                        <span style={{ minWidth: "180px" }}>7th Activity</span> Stargazing (Photo Activity):
-                      </button>
-                    </h2>
-                    <div id="collapseSeven" className="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#tourPlan">
-                      <div className="accordion-body">
-                        <ul>
-                          <li>End the night with a serene stargazing session, perfect for capturing memorable photos.</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Drop-Off */}
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingEight">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseEight"
-                        aria-expanded="false"
-                        aria-controls="collapseEight"
-                      >
-                        <span style={{ minWidth: "180px" }}>Drop-Off</span> To Hotel Or Accommodation:
-                      </button>
-                    </h2>
-                    <div id="collapseEight" className="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#tourPlan">
-                      <div className="accordion-body">
-                        <ul>
-                          <li>Conclude your tour with a comfortable drop-off at your hotel or accommodation, bringing an end to a day filled with memorable sights and experiences.</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
               </div>
@@ -683,12 +512,12 @@ const Page = () => {
                 <h4>Book Your Tour</h4>
                 <p>Reserve your ideal Room early for a hassle-free
                   trip secure comfort and convenience!</p>
-                {/* <div className="nav nav-pills mb-40" role="tablist">
+                <div className="nav nav-pills mb-40" role="tablist">
                 <button className="nav-link show active" id="v-pills-booking-tab" data-bs-toggle="pill" data-bs-target="#v-pills-booking" type="button" role="tab" aria-controls="v-pills-booking" aria-selected="true">Online Booking</button>
                 <button className="nav-link" id="v-pills-contact-tab" data-bs-toggle="pill" data-bs-target="#v-pills-contact" type="button" role="tab" aria-controls="v-pills-contact" aria-selected="false">Inquiry Form</button>
-              </div> */}
+              </div>
                 <div className="tab-content" id="v-pills-tabContent2">
-                  <div className="tab-pane fade" id="v-pills-booking" role="tabpanel" aria-labelledby="v-pills-booking-tab">
+                  <div className="tab-pane fade show active" id="v-pills-booking" role="tabpanel" aria-labelledby="v-pills-booking-tab">
                     <div className="sidebar-booking-form">
                       <form>
                         <div className="tour-date-wrap mb-50">
@@ -767,7 +596,7 @@ const Page = () => {
                       </form>
                     </div>
                   </div>
-                  <div className="tab-pane fade active show" id="v-pills-contact" role="tabpanel" aria-labelledby="v-pills-contact-tab">
+                  <div className="tab-pane fade " id="v-pills-contact" role="tabpanel" aria-labelledby="v-pills-contact-tab">
                     <div className="sidebar-booking-form">
                       <form onSubmit={handleSubmit}>
                         <div className="form-inner mb-20">
@@ -882,7 +711,6 @@ const Page = () => {
       /> */}
       </div>
       <hr />
-      <button onClick={showToasts}>Show Toasts</button>
 
       <ToastContainer />
       <Footer />

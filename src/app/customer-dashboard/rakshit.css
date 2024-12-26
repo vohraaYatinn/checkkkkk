@@ -233,9 +233,9 @@
 }
 
 .product-name .img img {
-  width: 6rem !important;
-  height: 3.5rem !important;
-  border-radius: 50% !important;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 40px !important;
   margin-right: 1rem !important;
 }
 
@@ -443,4 +443,7 @@
   .package-list-banner img{
     height:300px;
   }
+}
+.dashboard-wrapper{
+  background: #f9f9f9 ;
 }

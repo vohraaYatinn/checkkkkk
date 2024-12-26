@@ -29,7 +29,7 @@ const page = () => {
                   <h6 className="rakshit-font dashboard-sidebar-active-text">Dashboard</h6>
                 </Link>
               </li>
-              <li className="active dashboard-sidebar-active">
+              <li >
                 <Link href="/customer-dashboard/customer-booking-list">
                   <svg
                     width="17"
@@ -46,7 +46,7 @@ const page = () => {
                   <h6>Tour History</h6>
                 </Link>
               </li>
-              <li>
+              <li className="active dashboard-sidebar-active">
                 <Link
                   href="/customer-dashboard/favourite-list
           "
@@ -138,7 +138,7 @@ const page = () => {
     <div className="row">
       <div className="col-xl-12 mb-30">
         <div className="page-title">
-          <h4>Booking History:</h4>
+          <h4>Favourite List:</h4>
           <div className="booking-options">
             <ul className="nav nav-pills" id="pills-tab2" role="tablist">
               <li className="nav-item" role="presentation">
@@ -204,20 +204,7 @@ const page = () => {
             <div className="recent-listing-area">
               <div className="title-and-tab">
                 <h6>Tour Package Info</h6>
-                <ul className="nav nav-tabs" id="myTab" role="tablist">
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">All Booking</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="complite-tab" data-bs-toggle="tab" data-bs-target="#complite" type="button" role="tab" aria-controls="complite" aria-selected="false">Completed</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="processing-tab" data-bs-toggle="tab" data-bs-target="#processing" type="button" role="tab" aria-controls="processing" aria-selected="false">Processing</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="cancell-tab" data-bs-toggle="tab" data-bs-target="#cancell" type="button" role="tab" aria-controls="cancell" aria-selected="false">Cancelled</button>
-                  </li>
-                </ul>
+         
               </div>
               <div className="tab-content" id="myTabContent">
                 <div className="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
@@ -229,8 +216,7 @@ const page = () => {
                           <th>Type</th>
                           <th>Tourist</th>
                           <th>Price</th>
-                          <th>Status</th>
-                          <th>Timeline</th>
+  
                         </tr>
                       </thead>
                       <tbody>
@@ -259,12 +245,7 @@ const page = () => {
                           <td data-label="Price">
                             $720.00
                           </td>
-                          <td data-label="Status">
-                            <span className="confirmed">Confirmed</span>
-                          </td>
-                          <td data-label="Timeline">
-                            July 10, 2023 - July 14, 2023
-                          </td>
+
                         </tr>
                         <tr>
                           <td data-label="Tour Package">
@@ -291,12 +272,7 @@ const page = () => {
                           <td data-label="Price">
                             $720.00
                           </td>
-                          <td data-label="Status">
-                            <span className="pending">Processing</span>
-                          </td>
-                          <td data-label="Timeline">
-                            July 14, 2023 - July 17, 2023
-                          </td>
+                         
                         </tr>
                         <tr>
                           <td data-label="Tour Package">
@@ -323,12 +299,7 @@ const page = () => {
                           <td data-label="Price">
                             $1550.00
                           </td>
-                          <td data-label="Status">
-                            <span className="rejected">Cancelled</span>
-                          </td>
-                          <td data-label="Timeline">
-                            July 10, 2023 - July 14, 2023
-                          </td>
+                         
                         </tr>
                         <tr>
                           <td data-label="Tour Package">
@@ -355,12 +326,7 @@ const page = () => {
                           <td data-label="Price">
                             $7720.00
                           </td>
-                          <td data-label="Status">
-                            <span className="confirmed">Confirmed</span>
-                          </td>
-                          <td data-label="Timeline">
-                            Jan 10, 2023 - Jan 14, 2023
-                          </td>
+                       
                         </tr>
                         <tr>
                           <td data-label="Tour Package">
@@ -387,12 +353,7 @@ const page = () => {
                           <td data-label="Price">
                             $720.00
                           </td>
-                          <td data-label="Status">
-                            <span className="confirmed">Confirmed</span>
-                          </td>
-                          <td data-label="Timeline">
-                            July 10, 2023 - July 14, 2023
-                          </td>
+                
                         </tr>
                       </tbody>
                     </table>
@@ -1063,20 +1024,7 @@ const page = () => {
             <div className="recent-listing-area">
               <div className="title-and-tab">
                 <h6>Hotel Info</h6>
-                <ul className="nav nav-tabs" id="myTab2" role="tablist">
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link active" id="all2-tab" data-bs-toggle="tab" data-bs-target="#all2" type="button" role="tab" aria-controls="all2" aria-selected="true">All Booking</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="complite2-tab" data-bs-toggle="tab" data-bs-target="#complite2" type="button" role="tab" aria-controls="complite2" aria-selected="false">Booked</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="processing2-tab" data-bs-toggle="tab" data-bs-target="#processing2" type="button" role="tab" aria-controls="processing2" aria-selected="false">Pending</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="cancell2-tab" data-bs-toggle="tab" data-bs-target="#cancell2" type="button" role="tab" aria-controls="cancell2" aria-selected="false">Cancelled</button>
-                  </li>
-                </ul>
+           
               </div>
               <div className="tab-content" id="myTab2Content">
                 <div className="tab-pane fade show active" id="all2" role="tabpanel" aria-labelledby="all2-tab">
@@ -2652,20 +2600,7 @@ const page = () => {
             <div className="recent-listing-area">
               <div className="title-and-tab">
                 <h6>Activities Info</h6>
-                <ul className="nav nav-tabs" id="myTab4" role="tablist">
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link active" id="all4-tab" data-bs-toggle="tab" data-bs-target="#all4" type="button" role="tab" aria-controls="all4" aria-selected="true">All</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="complite4-tab" data-bs-toggle="tab" data-bs-target="#complite4" type="button" role="tab" aria-controls="complite4" aria-selected="false">Completed</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="processing4-tab" data-bs-toggle="tab" data-bs-target="#processing4" type="button" role="tab" aria-controls="processing4" aria-selected="false">Processing</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="cancell4-tab" data-bs-toggle="tab" data-bs-target="#cancell4" type="button" role="tab" aria-controls="cancell4" aria-selected="false">Cancelled</button>
-                  </li>
-                </ul>
+              
               </div>
               <div className="tab-content" id="myTab4Content">
                 <div className="tab-pane fade show active" id="all4" role="tabpanel" aria-labelledby="all4-tab">
@@ -3639,20 +3574,7 @@ const page = () => {
             <div className="recent-listing-area">
               <div className="title-and-tab">
                 <h6>Transports Info</h6>
-                <ul className="nav nav-tabs" id="myTab5" role="tablist">
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link active" id="all5-tab" data-bs-toggle="tab" data-bs-target="#all5" type="button" role="tab" aria-controls="all5" aria-selected="true">All</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="complite5-tab" data-bs-toggle="tab" data-bs-target="#complite5" type="button" role="tab" aria-controls="complite5" aria-selected="false">Completed</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="processing5-tab" data-bs-toggle="tab" data-bs-target="#processing5" type="button" role="tab" aria-controls="processing5" aria-selected="false">Processing</button>
-                  </li>
-                  <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="cancell5-tab" data-bs-toggle="tab" data-bs-target="#cancell5" type="button" role="tab" aria-controls="cancell5" aria-selected="false">Cancelled</button>
-                  </li>
-                </ul>
+               
               </div>
               <div className="tab-content" id="myTab5Content">
                 <div className="tab-pane fade show active" id="all5" role="tabpanel" aria-labelledby="all5-tab">
