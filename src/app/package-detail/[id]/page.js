@@ -15,7 +15,7 @@ import "./package-details-page.css"
 import Newslatter from "@/components/common/Newslatter";
 import "./activites-breadcrum.css"
 import StarRating from "@/components/common/StarRating";
-import { countryCodes, customLabels, sendEmail } from "@/hooks/CommonFunctions";
+import { buyFunction, countryCodes, customLabels, sendEmail } from "@/hooks/CommonFunctions";
 import ThankYouModal from "@/components/common/ThankYouModal";
 import ReactFlagsSelect from "react-flags-select";
 import Slider from "react-slick";
@@ -532,12 +532,14 @@ const Page = () => {
                         <div className="booking-form-item-type mb-45">
                           <div className="number-input-item adults">
                             <label className="number-input-lable">Adult:<span>
-                            </span><span> $60 <del>$80</del></span></label>
+                            </span>
+                            
+                            </label>
                             <QuantityCounter incIcon="bx bx-plus" dcrIcon="bx bx-minus" />
                           </div>
                           <div className="number-input-item children">
                             <label className="number-input-lable">Children:<span>
-                            </span><span>$15</span></label>
+                            </span></label>
                             <QuantityCounter incIcon="bx bx-plus" dcrIcon="bx bx-minus" />
                           </div>
                         </div>
@@ -592,7 +594,7 @@ const Page = () => {
                           </div>
                         </div>
                         <div className="total-price"><span>Total Price:</span> $470</div>
-                        <button type="submit" className="primary-btn1 two book-now-activity">Book Now</button>
+                        <button type="button" className="primary-btn1 two book-now-activity" onClick={buyFunction}>Book Now</button>
                       </form>
                     </div>
                   </div>
@@ -631,6 +633,10 @@ const Page = () => {
                           </label>
                           <div style={{ display: "flex", gap: "10px" }}>
                             <ReactFlagsSelect
+                            style={{
+                              border:"0rem",
+                              background:"white"
+                            }}
                               className="phone-react-thing"
                               selected={selected}
                               showSelectedLabel={false}
@@ -711,7 +717,6 @@ const Page = () => {
       /> */}
       </div>
       <hr />
-
       <ToastContainer />
       <Footer />
     </>

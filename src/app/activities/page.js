@@ -396,7 +396,7 @@ const page = () => {
                             <p>TAXES INCL/PERS</p>
                           </div>
                           <Link
-                            href="/activities/activities-mainpage"
+                            href="/package/package-details"
                             className="primary-btn2"
                           >
                             VIEW MORE

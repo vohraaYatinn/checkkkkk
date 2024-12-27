@@ -598,7 +598,7 @@ ul {
 }
 
 .mb-40 {
-  margin-bottom: 40px;
+  margin-bottom: 40px !important;
 }
 @media (max-width: 1199px) {
   .mb-40 {
@@ -25545,6 +25545,7 @@ header.style-3.four .nav-right .icon-list li:first-child svg {
   border-radius: 0;
   width: 48%;
   padding: 5px 15px;
+  border-radius: 21px;
 }
 .booking-form-wrap .nav-pills .nav-link.active {
   border-color: var(--primary-color1);
@@ -25587,6 +25588,7 @@ header.style-3.four .nav-right .icon-list li:first-child svg {
   padding: 10px 25px;
   height: 50px;
   border: 1px solid #eee;
+  border-radius: 21px;
 }
 .booking-form-wrap .sidebar-booking-form .tour-date-wrap .form-group svg {
   fill: var(--primary-color1);
@@ -29344,9 +29346,9 @@ header.style-3.four .nav-right .icon-list li:first-child svg {
   width: 30% !important;
 }
 .phone-react-thing button{
-  border: 0.3px solid var(--title-color);
+  border: 0.3px solid transparent;
   border-radius: 13px;
-  background-color: transparent;
+  background-color: white;
   width: 100%;
   height: 46px;
   color: var(--title-color);
