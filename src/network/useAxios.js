@@ -51,7 +51,7 @@ const useAxios = () => {
                 setError(err);
             }
             if (err?.response?.status === 403) {
-                // router.push("/login")
+                router.push("/login")
             }
             else{
                 setError(err);

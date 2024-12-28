@@ -11,3 +11,6 @@ const project = new HttpAxiosService(test_url);
 export const getSinglePackageById = (payload_data, id) => {
   return project.get(Urls.GET_SINGLE_PACKAGES_BY_ID+id, payload_data);
 };
+export const getSingleActivityById = (payload_data, id) => {
+  return project.get(Urls.GET_SINGLE_PACKAGES_BY_ID+id, payload_data);
+};
