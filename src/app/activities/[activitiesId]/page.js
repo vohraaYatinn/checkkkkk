@@ -7,7 +7,7 @@ import Breadcrumb from "@/components/common/Breadcrumb";
 import "@/components/stylebook/Footer.css";
 import SelectComponent from "@/uitils/SelectComponent";
 import "./activity-detail.css";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useAxios from "@/network/useAxios";
 import { getSingleActivityById } from "@/urls/urls";
 
@@ -19,6 +19,7 @@ const ActivitiesDetails = () => {
     activityFetch,
   ] = useAxios();
     const pathname = usePathname();
+    const route = useRouter()
   
     const id = pathname.split('/').pop(); 
     console.log(id);
@@ -134,8 +135,14 @@ const ActivitiesDetails = () => {
                   </table>
                 </div>
                 <div className="act-table-ftr">
-                    <span>More Activities</span>
-                    <button>Book Now</button>
+                    {/* <span>More Activities</span> */}
+                    <button className="mt-2 mx-4 mb-4"
+                    
+                    onClick={()=>{
+                      route.push("/booking-data-form")
+                      
+                    }}
+                    >Book Now</button>
                 </div>
               </div>
             </div>

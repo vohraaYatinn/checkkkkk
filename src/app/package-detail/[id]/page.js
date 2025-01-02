@@ -21,7 +21,7 @@ import ReactFlagsSelect from "react-flags-select";
 import Slider from "react-slick";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import useAxios from "@/network/useAxios";
 import { getSinglePackageById } from "@/urls/urls";
 import { ToastContainer, toast } from 'react-toastify';
@@ -30,7 +30,7 @@ const Page = () => {
   const [isOpenModalVideo, setOpenModalVideo] = useState(false);
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState("AE");
-
+  const route = useRouter()
 // localhost:3000/package-detail/10?category=electronics&price=1000
   // const searchParams = useSearchParams();
   // const category = searchParams.get('category');
@@ -594,7 +594,10 @@ const Page = () => {
                           </div>
                         </div>
                         <div className="total-price"><span>Total Price:</span> $470</div>
-                        <button type="button" className="primary-btn1 two book-now-activity" onClick={buyFunction}>Book Now</button>
+                        <button type="button" className="primary-btn1 two book-now-activity" onClick={()=>{
+                          route.push("/booking-data-form")
+                          
+                        }}>Book Now</button>
                       </form>
                     </div>
                   </div>
